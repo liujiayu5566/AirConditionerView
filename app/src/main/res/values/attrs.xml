@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="titleText" format="string" />
+    <attr name="titleTextColor" format="color" />
+    <attr name="titleTextSize" format="dimension" />
+
+    <declare-styleable name="CustomTitleView">
+        <attr name="titleText" />
+        <attr name="titleTextColor" />
+        <attr name="titleTextSize" />
+    </declare-styleable>
+
+
+    <attr name="image" format="reference" />
+    <attr name="imageScaleType">
+        <enum name="fillXY" value="0" />
+        <enum name="center" value="1" />
+    </attr>
+
+    <declare-styleable name="CustomImageView">
+        <attr name="titleText" />
+        <attr name="titleTextSize" />
+        <attr name="titleTextColor" />
+        <attr name="image" />
+        <attr name="imageScaleType" />
+    </declare-styleable>
+
+    <attr name="firstColor" format="color" />
+    <attr name="secondColor" format="color" />
+    <attr name="circleWidth" format="dimension" />
+    <attr name="speed" format="integer" />
+
+    <declare-styleable name="CustomProgressBar">
+        <attr name="firstColor" />
+        <attr name="secondColor" />
+        <attr name="circleWidth" />
+        <attr name="speed" />
+    </declare-styleable>
+
+    <declare-styleable name="LabelView">
+        <attr name="text" format="string" />
+        <attr name="textColor" format="color" />
+        <attr name="textSize" format="dimension" />
+    </declare-styleable>
+
+
+    <declare-styleable name="CustomTitleBar">
+        <attr name="title_background_color" format="reference|integer" />
+        <attr name="left_button_visible" format="boolean" />
+        <attr name="right_button_visible" format="boolean" />
+        <attr name="title_text" format="string" />
+        <attr name="title_text_color" format="color" />
+        <attr name="title_text_drawable" format="reference|integer" />
+        <attr name="right_button_text" format="string" />
+        <attr name="right_button_text_color" format="color" />
+        <attr name="right_button_drawable" format="reference|integer" />
+        <attr name="left_button_text" format="string" />
+        <attr name="left_button_text_color" format="color" />
+        <attr name="left_button_drawable" format="reference|integer" />
+    </declare-styleable>
+
+    <declare-styleable name="CirqueView">
+        <attr name="temperature_min" format="integer">10</attr>
+        <attr name="temperature_max" format="integer">30</attr>
+        <attr name="time_left" format="integer">10</attr>
+        <attr name="time_right" format="integer">30</attr>
+        <attr name="time_direction" format="boolean">true</attr>
+    </declare-styleable>
+
+    <declare-styleable name="MoneyView">
+        <attr name="money_text" format="integer">0</attr>
+        <attr name="money_time" format="integer">5000</attr>
+    </declare-styleable>
+
+</resources>

@@ -87,6 +87,7 @@ public class CirqueView extends View {
     private int timeInitial;
     private String text;
     private String timeText;
+
     public CirqueView(Context context) {
         this(context, null);
     }
@@ -225,7 +226,7 @@ public class CirqueView extends View {
 
         canvas.drawArc(oval, 195, 150, false, cirqueBackground);//小弧形
 
-        canvas.drawArc(oval, 165, -150, false, cirqueBackground);//小弧形
+        canvas.drawArc(oval, 15, 150, false, cirqueBackground);//小弧形
 
         if (mCurrentAngle != 0) {
             canvas.drawArc(oval, 195, mCurrentAngle, false, cirque);//小弧形
@@ -243,7 +244,6 @@ public class CirqueView extends View {
             timeText = Math.round(mTimeCurrentAngle / (150f / timeV)) + timeMaxTxt + "min";
         }
         textPaint.setColor(colors[(int) (mCurrentAngle / 17)]);
-//        mSweepGradient.getClass().
         canvas.drawText(text, getWidth() / 2 - textPaint.measureText(text) / 2, getHeight() / 2 - DensityUtil.dip2px(context, 5), textPaint);
         canvas.drawText(timeText, getWidth() / 2 - timeTextPaint.measureText(timeText) / 2, getHeight() / 2 + DensityUtil.dip2px(context, 20), timeTextPaint);
         canvas.drawText(timeMinTxt + "", getWidth() / 2 - radius - defaultValue - timeTextPaint.measureText(timeMinTxt + "") * 1 / 3, getHeight() / 2 + DensityUtil.dip2px(context, 20), unitPaint);
@@ -252,10 +252,8 @@ public class CirqueView extends View {
         canvas.drawBitmap(sun, getWidth() / 2 + radius + defaultValue - sun.getWidth() / 2, getHeight() / 2 - DensityUtil.dip2px(context, 20), bitmapPaint);
 
 
-        try {
-            linePaint.setColor(colors[(int) (mCurrentAngle / 15 + 0.5f)]);
-        } catch (Exception e) {
-        }
+        linePaint.setColor(colors[(int) (mCurrentAngle / (15 + 0.5f))]);
+
         canvas.rotate(mCurrentAngle + 15f, getWidth() / 2, getHeight() / 2);
         canvas.drawLine(getWidth() / 2 - radius - defaultValue - DensityUtil.dip2px(context, 1), getHeight() / 2 - DensityUtil.dip2px(context, 1), getWidth() / 2 - radius * 3 / 4, getHeight() / 2, linePaint);
         if (timeaspect) {

@@ -1,15 +1,15 @@
+# 介绍 #
+空调调机器(圆环双方向控制温度、时间)
 
-**看一下UI提供的效果**<br>
-
+**先一下UI提供的效果**<br>
 ![](https://i.imgur.com/MteZZ9w.jpg)<br>
 
-**先看一下最终效果(gif录制有虚影,实际运行正常)**<br>
-
+**最终效果(gif录制有虚影,实际运行正常)**<br>
 ![](https://i.imgur.com/96HYUe5.gif)
 
 
 # 代码实现 #
-# 1.res/values/attr.xml<br>
+# res/values/attr.xml<br>
 自定义属性: #
 
 	<?xml version="1.0" encoding="utf-8"?>
@@ -47,7 +47,6 @@ UI设置上,滑动方向都是从左到右的.个人感觉下方滑动改为从�
                 Util.showToast(MainActivity.this, temperature + "//" + time);
             }
         });
-
 回调返回String类型数值.
 
 # 总结 #

@@ -4,8 +4,8 @@
 **先一下UI提供的效果**<br>
 ![](https://i.imgur.com/MteZZ9w.jpg)<br>
 
-**最终效果(gif录制有虚影,实际运行正常)**<br>
-![](https://i.imgur.com/96HYUe5.gif)
+**最终效果**<br>
+![](https://i.imgur.com/Qp2RAH6.gif)
 
 
 # 代码实现 #

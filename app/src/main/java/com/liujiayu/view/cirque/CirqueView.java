@@ -409,6 +409,9 @@ public class CirqueView extends View {
      * @param temperaturemax 最大温度
      */
     public void setTemperaturemin(int temperaturemin, int temperaturemax) {
+        if (temperaturemin >= temperaturemax) {
+            throw new RuntimeException("Temperature range anomaly");
+        }
         this.minTxt = temperaturemin;
         this.maxTxt = temperaturemax;
 
@@ -421,8 +424,8 @@ public class CirqueView extends View {
      * @param timemax 最大时间
      */
     public void setTime(int timemin, int timemax) {
-        if (timemin < 0) {
-            throw new RuntimeException("Time cannot be negative");
+        if (timemin < 0 || timemin >= timemax) {
+            throw new RuntimeException("Time cannot be negative or Time domain anomaly");
         }
         this.timeMinTxt = timemin;
         this.timeMaxTxt = timemax;

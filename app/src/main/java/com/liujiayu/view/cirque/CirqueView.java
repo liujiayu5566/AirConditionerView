@@ -41,6 +41,7 @@ public class CirqueView extends View {
     private Paint bitmapPaint;
     private float mCurrentAngle = 0;
     private int defaultValue;
+    private int value;
     private RectF oval;
     private txtFinishListener txtFinishListener;
 
@@ -64,16 +65,16 @@ public class CirqueView extends View {
     };
 
     float[] floats = {
-            0.5f,
-            0.55f,
-            0.6f,
-            0.65f,
-            0.7f,
-            0.75f,
-            0.8f,
-            0.85f,
-            0.9f,
-            0.95f,
+            0.54f,
+            0.587f,
+            0.634f,
+            0.681f,
+            0.728f,
+            0.775f,
+            0.822f,
+            0.869f,
+            0.916f,
+            0.96f,
     };
 
     private SweepGradient mSweepGradient;
@@ -113,6 +114,7 @@ public class CirqueView extends View {
 
     private void initPaint() {
         defaultValue = DensityUtil.dip2px(context, 10);
+        value = DensityUtil.dip2px(context, 1);
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         circularPaint = new Paint();  //中间圆
         circularPaint.setColor(Color.WHITE);
@@ -125,7 +127,7 @@ public class CirqueView extends View {
         circularBackground.setAntiAlias(true);
 
         cirqueBackground = new Paint();
-        cirqueBackground.setStrokeWidth(DensityUtil.dip2px(context, 2.5f));
+        cirqueBackground.setStrokeWidth(DensityUtil.dip2px(context, 4.0f));
         cirqueBackground.setStrokeCap(Paint.Cap.ROUND);//充满
         cirqueBackground.setColor(Color.GRAY);
         cirqueBackground.setAlpha(50);
@@ -134,27 +136,27 @@ public class CirqueView extends View {
 
 
         cirque = new Paint();
-        cirque.setStrokeWidth(DensityUtil.dip2px(context, 2.5f));
+        cirque.setStrokeWidth(DensityUtil.dip2px(context, 4.0f));
         cirque.setStrokeCap(Paint.Cap.ROUND);
         cirque.setStyle(Paint.Style.STROKE);//设置空心
         cirque.setAntiAlias(true);//设置空心
 
         timecirque = new Paint();
-        timecirque.setStrokeWidth(DensityUtil.dip2px(context, 2.5f));
+        timecirque.setStrokeWidth(DensityUtil.dip2px(context, 4.0f));
         timecirque.setStrokeCap(Paint.Cap.ROUND);
-        timecirque.setColor(Color.BLACK);
+        timecirque.setColor(Color.parseColor("#747F9D"));
         timecirque.setStyle(Paint.Style.STROKE);//设置空心
         timecirque.setAntiAlias(true);//设置空心
 
 
         linePaint = new Paint();
         linePaint.setAntiAlias(true);
-        linePaint.setStrokeWidth(DensityUtil.dip2px(context, 1.5f));
+        linePaint.setStrokeWidth(DensityUtil.dip2px(context, 2.0f));
 
         timeLinePaint = new Paint();
         timeLinePaint.setAntiAlias(true);
-        timeLinePaint.setColor(Color.BLACK);
-        timeLinePaint.setStrokeWidth(DensityUtil.dip2px(context, 1.5f));
+        timeLinePaint.setColor(Color.parseColor("#747F9D"));
+        timeLinePaint.setStrokeWidth(DensityUtil.dip2px(context, 2.0f));
 
         textPaint = new Paint();
         textPaint.setColor(getResources().getColor(R.color.greenview));
@@ -162,12 +164,12 @@ public class CirqueView extends View {
         textPaint.setTextSize(DensityUtil.dip2px(context, 30));
 
         timeTextPaint = new Paint();
-        timeTextPaint.setColor(Color.BLACK);
+        timeTextPaint.setColor(Color.parseColor("#747F9D"));
         timeTextPaint.setAntiAlias(true);
         timeTextPaint.setTextSize(DensityUtil.dip2px(context, 15));
 
         unitPaint = new Paint();
-        unitPaint.setColor(Color.BLACK);
+        unitPaint.setColor(Color.parseColor("#747F9D"));
         unitPaint.setAntiAlias(true);
         unitPaint.setTextSize(DensityUtil.dip2px(context, 10));
 
@@ -189,14 +191,14 @@ public class CirqueView extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         setMeasuredDimension(measure(widthMeasureSpec), measure(heightMeasureSpec));
-        radius = (getWidth() / 2) - DensityUtil.dip2px(context, 70);
-        oval.set(getWidth() / 2 - radius - defaultValue, getHeight() / 2 - radius - defaultValue,
-                getWidth() / 2 + radius + defaultValue, getHeight() / 2 + radius + defaultValue);
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
+        radius = (getWidth() / 2) - DensityUtil.dip2px(context, 70);
+        oval.set(getWidth() / 2 - radius - defaultValue, getHeight() / 2 - radius - defaultValue,
+                getWidth() / 2 + radius + defaultValue, getHeight() / 2 + radius + defaultValue);
         mSweepGradient = new SweepGradient(getWidth() / 2, getHeight() / 2, colors, floats);
         cirque.setShader(mSweepGradient);
     }
@@ -243,13 +245,13 @@ public class CirqueView extends View {
         } else {
             timeText = Math.round(mTimeCurrentAngle / (150f / timeV)) + timeMaxTxt + "min";
         }
-        textPaint.setColor(colors[(int) (mCurrentAngle / 17)]);
+        textPaint.setColor(colors[(int) (mCurrentAngle / (15 + 0.5f))]);
         canvas.drawText(text, getWidth() / 2 - textPaint.measureText(text) / 2, getHeight() / 2 - DensityUtil.dip2px(context, 5), textPaint);
         canvas.drawText(timeText, getWidth() / 2 - timeTextPaint.measureText(timeText) / 2, getHeight() / 2 + DensityUtil.dip2px(context, 20), timeTextPaint);
-        canvas.drawText(timeMinTxt + "", getWidth() / 2 - radius - defaultValue - timeTextPaint.measureText(timeMinTxt + "") * 1 / 3, getHeight() / 2 + DensityUtil.dip2px(context, 20), unitPaint);
-        canvas.drawText(timeMaxTxt + "", getWidth() / 2 + radius + defaultValue - timeTextPaint.measureText(timeMaxTxt + "") * 1 / 3, getHeight() / 2 + DensityUtil.dip2px(context, 20), unitPaint);
-        canvas.drawBitmap(snowflake, getWidth() / 2 - radius - defaultValue - snowflake.getWidth() / 2, getHeight() / 2 - DensityUtil.dip2px(context, 20), bitmapPaint);
-        canvas.drawBitmap(sun, getWidth() / 2 + radius + defaultValue - sun.getWidth() / 2, getHeight() / 2 - DensityUtil.dip2px(context, 20), bitmapPaint);
+        canvas.drawText(timeMinTxt + "", getWidth() / 2 - radius - defaultValue - timeTextPaint.measureText(timeMinTxt + "") * 1 / 3 + value, getHeight() / 2 + DensityUtil.dip2px(context, 17), unitPaint);
+        canvas.drawText(timeMaxTxt + "", getWidth() / 2 + radius + defaultValue - timeTextPaint.measureText(timeMaxTxt + "") * 1 / 3 - value, getHeight() / 2 + DensityUtil.dip2px(context, 17), unitPaint);
+        canvas.drawBitmap(snowflake, getWidth() / 2 - radius - defaultValue - snowflake.getWidth() / 2 + value, getHeight() / 2 - DensityUtil.dip2px(context, 17), bitmapPaint);
+        canvas.drawBitmap(sun, getWidth() / 2 + radius + defaultValue - sun.getWidth() / 2 - value, getHeight() / 2 - DensityUtil.dip2px(context, 17), bitmapPaint);
 
 
         linePaint.setColor(colors[(int) (mCurrentAngle / (15 + 0.5f))]);

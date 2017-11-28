@@ -20,7 +20,6 @@
         <attr name="temperature_max" format="integer">30</attr>
         <attr name="time_left" format="integer">10</attr>
         <attr name="time_right" format="integer">30</attr>
-        <attr name="time_direction" format="boolean">true</attr>
     </declare-styleable>
 
 	</resources>
@@ -30,17 +29,13 @@
 **temperature_max:**	温度范围最大值.<br>
 **time_left:**	时间范围左侧数值.<br>
 **time_right:**	时间范围右侧数值.<br>
-**time_direction:**	时间轴滑动方向.<br>
-
-UI设置上,滑动方向都是从左到右的.个人感觉下方滑动改为从右向左会好看一些.所以添加了time_direction参数,来控制下方的滑动方向.
 
 
 # 调用方法 #
 
 	CirqueView mCv = (CirqueView) findViewById(R.id.cv);
-//        mCv.setTemperaturemin(-30, 30); //设置温度范围
-//        mCv.setTime(0, 60); //设置时间范围
-//        mCv.setTimeaspect(true);  //设置下方滑动方向 true从左到右  false从右到左
+	//        mCv.setTemperaturemin(-30, 30); //设置温度范围  默认10-30
+	//        mCv.setTime(0, 60); //设置时间范围  默认10-30
         mCv.setDefault(27, 22);  //添加默认数据--注:不能超出范围
         mCv.setTxtFinishListener(new CirqueView.txtFinishListener() {
             @Override
@@ -48,6 +43,7 @@ UI设置上,滑动方向都是从左到右的.个人感觉下方滑动改为从�
                 Util.showToast(MainActivity.this, temperature + "//" + time);
             }
         });
+
 回调返回String类型数值.
 
 # 总结 #

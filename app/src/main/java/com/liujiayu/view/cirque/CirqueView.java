@@ -222,20 +222,21 @@ public class CirqueView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        //背景圆以及背景虚化
         canvas.drawCircle(getWidth() / 2, getHeight() / 2, radius + DensityUtil.dip2px(context, 5), circularBackground);
         canvas.drawCircle(getWidth() / 2, getHeight() / 2, radius, circularPaint);
-
+        //弧形背景
         canvas.drawArc(oval, 195, 150, false, cirqueBackground);//小弧形
-
         canvas.drawArc(oval, 15, 150, false, cirqueBackground);//小弧形
-
+        //温度绘制弧形
         if (mCurrentAngle != 0) {
             canvas.drawArc(oval, 195, mCurrentAngle, false, cirque);//小弧形
         }
+        //时间绘制弧形
         if (mTimeCurrentAngle != 0) {
-            timeInitial = 165;
-            canvas.drawArc(oval, timeInitial, -mTimeCurrentAngle, false, timecirque);//小弧形
+            canvas.drawArc(oval, 165, -mTimeCurrentAngle, false, timecirque);//小弧形
         }
+        //文字以及图标绘制
         int v = maxTxt - minTxt;
         int timeV = timeMaxTxt - timeMinTxt;
         text = Math.round(mCurrentAngle / (150f / v)) + minTxt + "℃";
@@ -248,15 +249,14 @@ public class CirqueView extends View {
         canvas.drawBitmap(snowflake, getWidth() / 2 - radius - defaultValue - snowflake.getWidth() / 2 + value, getHeight() / 2 - DensityUtil.dip2px(context, 17), bitmapPaint);
         canvas.drawBitmap(sun, getWidth() / 2 + radius + defaultValue - sun.getWidth() / 2 - value, getHeight() / 2 - DensityUtil.dip2px(context, 17), bitmapPaint);
 
-
+        //刻度绘制竖线
         linePaint.setColor(colors[(int) (mCurrentAngle / (15 + 0.5f))]);
-
         canvas.rotate(mCurrentAngle + 15f, getWidth() / 2, getHeight() / 2);
         canvas.drawLine(getWidth() / 2 - radius - defaultValue - DensityUtil.dip2px(context, 1), getHeight() / 2 - DensityUtil.dip2px(context, 1), getWidth() / 2 - radius * 3 / 4, getHeight() / 2, linePaint);
         canvas.rotate(-mTimeCurrentAngle - 30f - mCurrentAngle, getWidth() / 2, getHeight() / 2);
         canvas.drawLine(getWidth() / 2 - radius - defaultValue - DensityUtil.dip2px(context, 1), getHeight() / 2 + DensityUtil.dip2px(context, 1), getWidth() / 2 - radius * 3 / 4, getHeight() / 2, timeLinePaint);
 
-        if (txtFinishListener != null) {
+        if (txtFinishListener != null) {  //监听
             txtFinishListener.onFinish(text, timeText);
         }
     }

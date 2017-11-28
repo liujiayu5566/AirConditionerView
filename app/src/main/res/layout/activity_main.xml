@@ -15,7 +15,6 @@
         android:layout_gravity="center"
         app:temperature_max="30"
         app:temperature_min="10"
-        app:time_direction="true"
         app:time_left="10"
         app:time_right="30" />
 

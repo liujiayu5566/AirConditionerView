@@ -49,7 +49,6 @@ public class CirqueView extends View {
     private int maxTxt;
     private int timeMinTxt;
     private int timeMaxTxt;
-    private boolean timeaspect = true;
 
     int[] colors = {
             Color.parseColor("#3FA7F4"),
@@ -108,7 +107,6 @@ public class CirqueView extends View {
         maxTxt = ta.getInteger(R.styleable.CirqueView_temperature_max, 30);
         timeMinTxt = ta.getInteger(R.styleable.CirqueView_time_left, 10);
         timeMaxTxt = ta.getInteger(R.styleable.CirqueView_time_right, 30);
-        timeaspect = ta.getBoolean(R.styleable.CirqueView_time_direction, true);
         ta.recycle();
         timeInitial = 165;
     }
@@ -235,17 +233,13 @@ public class CirqueView extends View {
             canvas.drawArc(oval, 195, mCurrentAngle, false, cirque);//小弧形
         }
         if (mTimeCurrentAngle != 0) {
-            timeInitial = timeaspect ? 165 : 15;
+            timeInitial = 165;
             canvas.drawArc(oval, timeInitial, -mTimeCurrentAngle, false, timecirque);//小弧形
         }
         int v = maxTxt - minTxt;
         int timeV = timeMaxTxt - timeMinTxt;
         text = Math.round(mCurrentAngle / (150f / v)) + minTxt + "℃";
-        if (timeaspect) {
-            timeText = Math.round(mTimeCurrentAngle / (150f / timeV)) + timeMinTxt + "min";
-        } else {
-            timeText = Math.round(mTimeCurrentAngle / (150f / timeV)) + timeMaxTxt + "min";
-        }
+        timeText = Math.round(mTimeCurrentAngle / (150f / timeV)) + timeMinTxt + "min";
         textPaint.setColor(colors[(int) (mCurrentAngle / (15 + 0.5f))]);
         canvas.drawText(text, getWidth() / 2 - textPaint.measureText(text) / 2, getHeight() / 2 - DensityUtil.dip2px(context, 5), textPaint);
         canvas.drawText(timeText, getWidth() / 2 - timeTextPaint.measureText(timeText) / 2, getHeight() / 2 + DensityUtil.dip2px(context, 20), timeTextPaint);
@@ -259,13 +253,8 @@ public class CirqueView extends View {
 
         canvas.rotate(mCurrentAngle + 15f, getWidth() / 2, getHeight() / 2);
         canvas.drawLine(getWidth() / 2 - radius - defaultValue - DensityUtil.dip2px(context, 1), getHeight() / 2 - DensityUtil.dip2px(context, 1), getWidth() / 2 - radius * 3 / 4, getHeight() / 2, linePaint);
-        if (timeaspect) {
-            canvas.rotate(-mTimeCurrentAngle - 30f - mCurrentAngle, getWidth() / 2, getHeight() / 2);
-            canvas.drawLine(getWidth() / 2 - radius - defaultValue - DensityUtil.dip2px(context, 1), getHeight() / 2 + DensityUtil.dip2px(context, 1), getWidth() / 2 - radius * 3 / 4, getHeight() / 2, timeLinePaint);
-        } else {
-            canvas.rotate(-mTimeCurrentAngle - mCurrentAngle, getWidth() / 2, getHeight() / 2);
-            canvas.drawLine(getWidth() / 2 + radius + defaultValue + DensityUtil.dip2px(context, 1), getHeight() / 2 + DensityUtil.dip2px(context, 1), getWidth() / 2 + radius * 3 / 4, getHeight() / 2, timeLinePaint);
-        }
+        canvas.rotate(-mTimeCurrentAngle - 30f - mCurrentAngle, getWidth() / 2, getHeight() / 2);
+        canvas.drawLine(getWidth() / 2 - radius - defaultValue - DensityUtil.dip2px(context, 1), getHeight() / 2 + DensityUtil.dip2px(context, 1), getWidth() / 2 - radius * 3 / 4, getHeight() / 2, timeLinePaint);
 
         if (txtFinishListener != null) {
             txtFinishListener.onFinish(text, timeText);
@@ -292,7 +281,6 @@ public class CirqueView extends View {
 
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
-
                 mCurrentAngle = (float) valueAnimator.getAnimatedValue();
                 postInvalidate();
             }
@@ -306,7 +294,6 @@ public class CirqueView extends View {
 
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
-
                 mTimeCurrentAngle = (float) valueAnimator.getAnimatedValue();
                 postInvalidate();
             }
@@ -359,11 +346,7 @@ public class CirqueView extends View {
                         float tan_x = get_x0 * (-1);
                         float tan_y = get_y0;
                         double atan = Math.atan(tan_x / tan_y);
-                        if (timeaspect) {
-                            mTimeCurrentAngle = -(int) Math.toDegrees(atan) + 90f;
-                        } else {
-                            mTimeCurrentAngle = -(int) Math.toDegrees(atan) + 90f - 150f;
-                        }
+                        mTimeCurrentAngle = -(int) Math.toDegrees(atan) + 90f;
                     }
 
                     /*04：右下角区域*/
@@ -371,23 +354,14 @@ public class CirqueView extends View {
                         float tan_x = get_x0;
                         float tan_y = get_y0;
                         double atan = Math.atan(tan_y / tan_x);
-                        if (timeaspect) {
-                            mTimeCurrentAngle = -(int) Math.toDegrees(atan) + 180f;
-                        } else {
-                            mTimeCurrentAngle = -(int) Math.toDegrees(atan);
-                        }
+                        mTimeCurrentAngle = -(int) Math.toDegrees(atan) + 180f;
                     }
-                    if (timeaspect) {
-                        if (Math.abs(mTimeCurrentAngle) <= 1 || (get_x0 <= 0 & get_y0 <= 0))
-                            mTimeCurrentAngle = 0;
-                        if (Math.abs(mTimeCurrentAngle) >= 149 || (get_x0 >= 0 & get_y0 <= 0))
-                            mTimeCurrentAngle = 150;
-                    } else {
-                        if (Math.abs(mTimeCurrentAngle) <= 1 || (get_x0 >= 0 & get_y0 <= 0))
-                            mTimeCurrentAngle = 0;
-                        if (Math.abs(mTimeCurrentAngle) >= 149 || (get_x0 <= 0 & get_y0 <= 0))
-                            mTimeCurrentAngle = -150;
-                    }
+
+                    if (Math.abs(mTimeCurrentAngle) <= 1 || (get_x0 <= 0 & get_y0 <= 0))
+                        mTimeCurrentAngle = 0;
+                    if (Math.abs(mTimeCurrentAngle) >= 149 || (get_x0 >= 0 & get_y0 <= 0))
+                        mTimeCurrentAngle = 150;
+
 
                 }
                 break;
@@ -447,6 +421,9 @@ public class CirqueView extends View {
      * @param timemax 最大时间
      */
     public void setTime(int timemin, int timemax) {
+        if (timemin < 0) {
+            throw new RuntimeException("Time cannot be negative");
+        }
         this.timeMinTxt = timemin;
         this.timeMaxTxt = timemax;
     }
@@ -467,12 +444,5 @@ public class CirqueView extends View {
         return timeMaxTxt;
     }
 
-    public boolean isTimeaspect() {
-        return timeaspect;
-    }
-
-    public void setTimeaspect(boolean timeaspect) {
-        this.timeaspect = timeaspect;
-    }
 
 }

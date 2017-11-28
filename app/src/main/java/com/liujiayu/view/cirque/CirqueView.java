@@ -88,6 +88,8 @@ public class CirqueView extends View {
     private int timeInitial;
     private String text;
     private String timeText;
+    private float temperature;
+    private float time;
 
     public CirqueView(Context context) {
         this(context, null);
@@ -101,7 +103,6 @@ public class CirqueView extends View {
         super(context, attrs, defStyleAttr);
         this.context = context;
         initPaint();
-        startAnim();
         TypedArray ta = context.getTheme().obtainStyledAttributes(attrs, R.styleable.CirqueView, defStyleAttr, 0);
         minTxt = ta.getInteger(R.styleable.CirqueView_temperature_min, 10);
         maxTxt = ta.getInteger(R.styleable.CirqueView_temperature_max, 30);
@@ -271,9 +272,20 @@ public class CirqueView extends View {
         }
     }
 
-    public void startAnim() {
+    public void setDefault(int temperature, int time) {
+        if (temperature < minTxt || temperature > maxTxt) {
+            throw new RuntimeException("Temperature out of range");
+        }
+        if (time < timeMinTxt || time > timeMaxTxt) {
+            throw new RuntimeException("Time out of range");
+        }
+        this.temperature = (float) (temperature - minTxt) / (maxTxt - minTxt) * 150f;
+        this.time = (float) (time - timeMinTxt) / (timeMaxTxt - timeMinTxt) * 150f;
+        startAnim();
+    }
 
-        ValueAnimator mAngleAnim = ValueAnimator.ofFloat(0, 100);
+    public void startAnim() {
+        ValueAnimator mAngleAnim = ValueAnimator.ofFloat(0, temperature);
         mAngleAnim.setInterpolator(new AccelerateDecelerateInterpolator());
         mAngleAnim.setDuration(1500);
         mAngleAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -287,7 +299,7 @@ public class CirqueView extends View {
         });
         mAngleAnim.start();
 
-        ValueAnimator mTimeAngleAnim = ValueAnimator.ofFloat(0, 0);
+        ValueAnimator mTimeAngleAnim = ValueAnimator.ofFloat(0, time);
         mTimeAngleAnim.setInterpolator(new AccelerateDecelerateInterpolator());
         mTimeAngleAnim.setDuration(1500);
         mTimeAngleAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {

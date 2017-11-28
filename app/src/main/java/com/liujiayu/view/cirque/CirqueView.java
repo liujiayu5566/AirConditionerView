@@ -196,7 +196,7 @@ public class CirqueView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        radius = (getWidth() / 2) - DensityUtil.dip2px(context, 70);
+        radius = (getWidth() / 2) - DensityUtil.dip2px(context, 20);
         oval.set(getWidth() / 2 - radius - defaultValue, getHeight() / 2 - radius - defaultValue,
                 getWidth() / 2 + radius + defaultValue, getHeight() / 2 + radius + defaultValue);
         mSweepGradient = new SweepGradient(getWidth() / 2, getHeight() / 2, colors, floats);
@@ -211,7 +211,7 @@ public class CirqueView extends View {
             result = specSize;
         } else {
             //这样，当时用wrap_content时，View就获得一个默认值200px，而不是填充整个父布局。
-            result = DensityUtil.dip2px(context, 300);
+            result = DensityUtil.dip2px(context, 200);
             if (specMode == MeasureSpec.AT_MOST) {
                 result = Math.min(result, specSize);
             }

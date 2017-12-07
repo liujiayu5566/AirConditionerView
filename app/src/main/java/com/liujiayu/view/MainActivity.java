@@ -22,7 +22,7 @@ public class MainActivity extends Activity {
         mCv.setDefault(27, 22);  //添加默认数据--注:不能超出范围
         mCv.setTxtFinishListener(new CirqueView.txtFinishListener() {
             @Override
-            public void onFinish(String temperature, String time) {
+            public void onFinish(int temperature, int time) {
                 Util.showToast(MainActivity.this, temperature + "//" + time);
             }
         });

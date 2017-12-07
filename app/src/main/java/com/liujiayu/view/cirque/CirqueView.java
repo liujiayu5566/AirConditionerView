@@ -257,7 +257,8 @@ public class CirqueView extends View {
         canvas.drawLine(getWidth() / 2 - radius - defaultValue - DensityUtil.dip2px(context, 1), getHeight() / 2 + DensityUtil.dip2px(context, 1), getWidth() / 2 - radius * 3 / 4, getHeight() / 2, timeLinePaint);
 
         if (txtFinishListener != null) {  //监听
-            txtFinishListener.onFinish(text, timeText);
+            txtFinishListener.onFinish(Integer.parseInt(text.replace("℃", "")),
+                    Integer.parseInt(timeText.replace("min", "")));
         }
     }
 
@@ -390,7 +391,7 @@ public class CirqueView extends View {
 
     public interface txtFinishListener {
 
-        void onFinish(String temperature, String time);
+        void onFinish(int temperature, int time);
 
     }
 
